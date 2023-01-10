@@ -1,11 +1,11 @@
 import useSound from "use-sound";
 import "./ecoute-choix-multiple-styles.css";
-import { Button } from "@mui/material/";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import { useState } from "react";
 import ButtonChoice from "../../util-component/button-choice-component/button-choice-component";
+import { Transition } from "react-transition-group";
 
-const ExoEcouteChoixMultiple = ({ exoData }) => {
+const ExoEcouteChoixMultiple = ({ exoData, callNext }) => {
   const { sound, answer, choices } = exoData;
   const [play] = useSound(sound);
 
@@ -51,6 +51,7 @@ const ExoEcouteChoixMultiple = ({ exoData }) => {
         {choices.map((choice) => {
           return (
             <ButtonChoice
+              key={choice.id}
               choice={choice}
               onClick={handleClick}
               style={getStyle(choice.id)}
@@ -59,7 +60,11 @@ const ExoEcouteChoixMultiple = ({ exoData }) => {
         })}
       </div>
       <div className="exo-footer">
-        {isAnswerCorrect && <button className="btn-next">Suivant</button>}
+        {isAnswerCorrect && (
+          <button className="btn-next" onClick={callNext}>
+            Suivant
+          </button>
+        )}
       </div>
     </div>
   );
