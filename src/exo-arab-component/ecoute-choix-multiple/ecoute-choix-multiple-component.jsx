@@ -3,7 +3,6 @@ import "./ecoute-choix-multiple-styles.css";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import { useState } from "react";
 import ButtonChoice from "../../util-component/button-choice-component/button-choice-component";
-import { Transition } from "react-transition-group";
 
 const ExoEcouteChoixMultiple = ({ exoData, callNext }) => {
   const { sound, answer, choices } = exoData;
