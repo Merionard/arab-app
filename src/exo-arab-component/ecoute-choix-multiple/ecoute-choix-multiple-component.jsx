@@ -3,6 +3,7 @@ import "./ecoute-choix-multiple-styles.css";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import { useState } from "react";
 import ButtonChoice from "../../util-component/button-choice-component/button-choice-component";
+import ExoHeader from "../exo-header/exo-header-component";
 
 const ExoEcouteChoixMultiple = ({ exoData, callNext }) => {
   const { sound, answer, choices } = exoData;
@@ -39,13 +40,7 @@ const ExoEcouteChoixMultiple = ({ exoData, callNext }) => {
   };
 
   return (
-    <div className="exo-choice-multiple-container">
-      <div className="exo-header">
-        <h1>Ecouter et sélectionner la lettre correspondante</h1>
-        <button className="sound" onClick={play}>
-          <AudiotrackIcon />
-        </button>
-      </div>
+    <div>
       <div className="choices-container">
         {choices.map((choice) => {
           return (

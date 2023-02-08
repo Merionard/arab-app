@@ -1,66 +1,42 @@
 import { useState } from "react";
-import alif from "../../sounds/alif.mp3";
-import ba from "../../sounds/ba.mp3";
 import ExoEcouteChoixMultiple from "../ecoute-choix-multiple/ecoute-choix-multiple-component";
+import ExoEcouteEcriture from "../ecoute-ecriture/ecoute-ecriture-component";
+import ExoHeader from "../exo-header/exo-header-component";
+import "./exo-container-styles.css";
 
-const exercices = [
-  {
-    id: 1,
-    sound: alif,
-    choices: [
-      { id: "1", value: "ا" },
-      { id: "2", value: "ب" },
-      { id: "3", value: "ت" },
-      { id: "4", value: "ت" },
-      { id: "5", value: "ت" },
-      { id: "6", value: "ت" },
-      { id: "7", value: "ت" },
-      { id: "8", value: "ت" },
-    ],
-    answer: "ا",
-  },
-  {
-    id: 2,
-    sound: ba,
-    choices: [
-      { id: "1", value: "ا" },
-      { id: "2", value: "ب" },
-      { id: "3", value: "ت" },
-      { id: "4", value: "ت" },
-      { id: "5", value: "ت" },
-      { id: "6", value: "ت" },
-      { id: "7", value: "ت" },
-      { id: "8", value: "ت" },
-    ],
-    answer: "ا",
-  },
-];
-
-const ExoContainer = () => {
-  const [currentExercice, setCurrentExercice] = useState(exercices[0]);
+const ExoContainer = ({ typeExo, title, exercicesData }) => {
+  const [currentExercice, setCurrentExercice] = useState(exercicesData[0]);
   const [exercicesFinished, setExercicesFinished] = useState(false);
 
-  console.log(currentExercice);
-
   const callNext = () => {
-    const currentIndex = exercices.indexOf(currentExercice);
-    if (currentIndex === exercices.length - 1) {
+    const currentIndex = exercicesData.indexOf(currentExercice);
+    if (currentIndex === exercicesData.length - 1) {
       setExercicesFinished(true);
       return;
     }
-    setCurrentExercice(exercices[currentIndex + 1]);
+    setCurrentExercice(exercicesData[currentIndex + 1]);
   };
   return (
     <div className="exo-container">
+      <ExoHeader sound={currentExercice.sound} title={title} />
       {!exercicesFinished ? (
         <div>
-          <ExoEcouteChoixMultiple
-            key={currentExercice.id}
-            exoData={currentExercice}
-            callNext={callNext}
-          />
+          {typeExo === "multiChoice" ? (
+            <ExoEcouteChoixMultiple
+              key={currentExercice.id}
+              exoData={currentExercice}
+              callNext={callNext}
+            />
+          ) : (
+            <ExoEcouteEcriture
+              key={currentExercice.id}
+              exoData={currentExercice}
+              callNext={callNext}
+            />
+          )}
+
           <span>
-            {exercices.indexOf(currentExercice) + 1}/{exercices.length}
+            {exercicesData.indexOf(currentExercice) + 1}/{exercicesData.length}
           </span>
         </div>
       ) : (

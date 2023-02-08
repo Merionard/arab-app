@@ -1,0 +1,16 @@
+.exo-header {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.exo-header h1 {
+  font-size: 25px;
+}
+
+.sound {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
