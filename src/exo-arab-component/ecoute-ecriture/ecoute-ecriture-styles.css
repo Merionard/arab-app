@@ -1,0 +1,15 @@
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 10px 0;
+  gap: 5px;
+}
+
+.form-input {
+  width: 70%;
+}
+
+.form-input:focus {
+  outline: none;
+}
