@@ -3,9 +3,12 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./routes/home/home-component";
 import Navigation from "./routes/navigation/navigation-component";
 import ExoContainer from "./exo-arab-component/exo-container/exo-container-component";
-import TestRecognitionArabe from "./recognition-arabe-component";
 import ba from "./sounds/ba.mp3";
 import alif from "./sounds/alif.mp3";
+import TracuctionOrale from "./exo-arab-component/exo-vocal/traduction-component";
+import ExoEcouteChoixMultiple from "./exo-arab-component/ecoute-choix-multiple/ecoute-choix-multiple-component";
+import ExoEcouteEcriture from "./exo-arab-component/ecoute-ecriture/ecoute-ecriture-component";
+import TraductionOrale from "./exo-arab-component/exo-vocal/traduction-component";
 
 const exercicesMultiChoice = [
   {
@@ -27,8 +30,8 @@ const exercicesMultiChoice = [
     id: 2,
     sound: ba,
     choices: [
-      { id: "1", value: "ا" },
-      { id: "2", value: "ب" },
+      { id: "9", value: "ا" },
+      { id: "10", value: "ب" },
     ],
     answer: "ا",
   },
@@ -43,24 +46,17 @@ const App = () => {
         <Route index element={<Home />} />
         <Route
           path="exo1"
-          element={
-            <ExoContainer
-              typeExo="multiChoice"
-              title="Ecouter et sélectionner la lettre correspondante"
-              exercicesData={exercicesMultiChoice}
-            />
-          }
+          element={<ExoEcouteChoixMultiple exo={exercicesMultiChoice} />}
         />
-        <Route path="exo2" element={<TestRecognitionArabe />} />
         <Route
-          path="exo3"
+          path="exo2"
           element={
-            <ExoContainer
-              title="Ecoutez et traduisez à l'écrit"
-              exercicesData={exoEcriture}
+            <TraductionOrale
+              exercicesData={[{ id: 1, sound: null, answer: "test" }]}
             />
           }
         />
+        <Route path="exo3" element={<ExoEcouteEcriture exo={exoEcriture} />} />
       </Route>
     </Routes>
   );

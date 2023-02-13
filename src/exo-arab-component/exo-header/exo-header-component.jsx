@@ -7,7 +7,7 @@ const ExoHeader = ({ sound, title }) => {
   return (
     <div className="exo-header">
       <h1>{title}</h1>
-      {sound !== undefined && (
+      {sound !== null && (
         <button className="sound" onClick={play}>
           <AudiotrackIcon />
         </button>

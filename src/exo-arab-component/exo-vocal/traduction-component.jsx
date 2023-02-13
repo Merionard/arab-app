@@ -2,8 +2,10 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { useState } from "react";
+import ExoContainer from "../exo-container/exo-container-component";
+import ExoHeader from "../exo-header/exo-header-component";
 
-const TestRecognitionArabe = () => {
+const TraductionOrale = () => {
   const [message, setMessage] = useState("");
 
   const commands = [
@@ -36,7 +38,8 @@ const TestRecognitionArabe = () => {
   };
 
   return (
-    <div>
+    <ExoContainer>
+      <ExoHeader sound={null} title={"Traduisez la phrase ci-dessous"} />
       <p>Traduisez la phrase ci-desous:</p>
       <p>Je viens de France</p>
       <button onClick={startListening}>Start</button>
@@ -44,8 +47,8 @@ const TestRecognitionArabe = () => {
       <button onClick={reset}>Reset</button>
       <p>{transcript}</p>
       <p>{message}</p>
-    </div>
+    </ExoContainer>
   );
 };
 
-export default TestRecognitionArabe;
+export default TraductionOrale;

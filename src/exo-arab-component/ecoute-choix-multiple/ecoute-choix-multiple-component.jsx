@@ -1,27 +1,43 @@
-import useSound from "use-sound";
 import "./ecoute-choix-multiple-styles.css";
-import AudiotrackIcon from "@mui/icons-material/Audiotrack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonChoice from "../../util-component/button-choice-component/button-choice-component";
 import ExoHeader from "../exo-header/exo-header-component";
+import ExoContainer from "../exo-container/exo-container-component";
 
-const ExoEcouteChoixMultiple = ({ exoData, callNext }) => {
-  const { sound, answer, choices } = exoData;
-  const [play] = useSound(sound);
+const styles = {
+  success: { backgroundColor: "green" },
+  error: { backgroundColor: "red" },
+  default: { backgroundColor: "#fafbfc" },
+};
 
+const ExoEcouteChoixMultiple = ({ exo }) => {
+  console.log("render");
+  const [exercices, setExercices] = useState(exo);
+  const [currentExercice, setCurrentExercice] = useState(exercices[0]);
+  const [finished, setfinished] = useState(false);
+  const [defaultStyle, setDefaultStyle] = useState(styles.default);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
   const [selectedId, setSelectedId] = useState("");
 
-  const styles = {
-    success: { backgroundColor: "green" },
-    error: { backgroundColor: "red" },
-    default: { backgroundColor: "#fafbfc" },
+  const { sound, answer, choices } = currentExercice;
+
+  const callNext = () => {
+    setDefaultStyle(styles.default);
+    const currentIndex = exercices.indexOf(currentExercice);
+    if (currentIndex === exercices.length - 1) {
+      setfinished(true);
+      return;
+    }
+    setCurrentExercice(exercices[currentIndex + 1]);
   };
+
+  useEffect(() => {
+    setDefaultStyle(null);
+  }, [isAnswerCorrect]);
 
   const handleClick = (event) => {
     setSelectedId(event.target.id);
-    console.log(event.target.value);
-    console.log(event.target.id);
+
     if (event.target.value === answer) {
       setIsAnswerCorrect(true);
     } else {
@@ -30,6 +46,7 @@ const ExoEcouteChoixMultiple = ({ exoData, callNext }) => {
   };
 
   const getStyle = (id) => {
+    console.log("getStyle");
     if (id !== selectedId) {
       return styles.default;
     }
@@ -40,7 +57,11 @@ const ExoEcouteChoixMultiple = ({ exoData, callNext }) => {
   };
 
   return (
-    <div>
+    <ExoContainer>
+      <ExoHeader
+        sound={sound}
+        title={"Ecouter et sélectionner la lettre correspondante"}
+      />
       <div className="choices-container">
         {choices.map((choice) => {
           return (
@@ -60,7 +81,10 @@ const ExoEcouteChoixMultiple = ({ exoData, callNext }) => {
           </button>
         )}
       </div>
-    </div>
+      <span>
+        {exercices.indexOf(currentExercice) + 1}/{exercices.length}
+      </span>
+    </ExoContainer>
   );
 };
 
