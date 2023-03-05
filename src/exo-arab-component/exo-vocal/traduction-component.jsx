@@ -53,9 +53,11 @@ const TraductionOrale = ({ exos }) => {
         <button onClick={reset}>Reset</button>
       </div>
 
-      <div className="d-flex flew-wrap">
+      <div className="d-flex flew-wrap justify-content-center">
         <p>{transcript}</p>
-        <div className="break"></div>
+        <div className="breakllll"></div>
+      </div>
+      <div className="d-flex flew-wrap justify-content-center">
         <p>{message}</p>
       </div>
       <div className="exo-footer">
