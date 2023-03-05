@@ -1,32 +1,28 @@
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExoContainer from "../exo-container/exo-container-component";
 import ExoHeader from "../exo-header/exo-header-component";
+import "./vocal-style.css";
 
-const TraductionOrale = () => {
+const TraductionOrale = ({ exos }) => {
   const [message, setMessage] = useState("");
+  const [currentExercice, setCurrentExercice] = useState(exos[0]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [validated, setValidated] = useState(false);
 
-  const commands = [
-    {
-      command: "انا من فرنسا",
-      callback: (command, spokenPhrase) => {
-        console.log("callback");
-        if (command === spokenPhrase) {
-          setMessage(`Bravo!`);
-        } else {
-          setMessage("Non vous avez dit:" + spokenPhrase);
-        }
-      },
-      isFuzzyMatch: true,
-      fuzzyMatchingThreshold: 0.5,
-    },
-  ];
+  const { phrase, answer } = currentExercice;
 
-  const { transcript, listening, resetTranscript } = useSpeechRecognition({
-    commands,
-  });
+  useEffect(() => {
+    setCurrentIndex(exos.indexOf(currentExercice));
+  }, [currentExercice, exos]);
+
+  const { transcript, resetTranscript } = useSpeechRecognition();
+
+  const callNext = () => {
+    setCurrentExercice(exos[currentIndex + 1]);
+  };
 
   const reset = () => {
     resetTranscript();
@@ -37,16 +33,44 @@ const TraductionOrale = () => {
     SpeechRecognition.startListening({ language: "ar-SA" });
   };
 
+  const validate = () => {
+    SpeechRecognition.stopListening();
+    setValidated(true);
+    if (transcript === answer) {
+      setMessage("Bravo");
+    } else {
+      setMessage("Erreur la réponse était: " + answer);
+    }
+  };
+
   return (
     <ExoContainer>
-      <ExoHeader sound={null} title={"Traduisez la phrase ci-dessous"} />
-      <p>Traduisez la phrase ci-desous:</p>
-      <p>Je viens de France</p>
-      <button onClick={startListening}>Start</button>
-      <button onClick={SpeechRecognition.stopListening}>Stop</button>
-      <button onClick={reset}>Reset</button>
-      <p>{transcript}</p>
-      <p>{message}</p>
+      <ExoHeader sound={null} title={"Traduisez: " + phrase} />
+
+      <div className="d-flex justify-content-end align-items-center">
+        <button onClick={startListening}>Start</button>
+        <button onClick={validate}>Validate</button>
+        <button onClick={reset}>Reset</button>
+      </div>
+
+      <div className="d-flex flew-wrap">
+        <p>{transcript}</p>
+        <div className="break"></div>
+        <p>{message}</p>
+      </div>
+      <div className="exo-footer">
+        {validated && !(currentIndex === exos.length - 1) && (
+          <button className="btn-next" onClick={callNext}>
+            Suivant
+          </button>
+        )}
+        {currentIndex === exos.length - 1 && validated && (
+          <button>Terminer</button>
+        )}
+      </div>
+      <span>
+        {exos.indexOf(currentExercice) + 1}/{exos.length}
+      </span>
     </ExoContainer>
   );
 };

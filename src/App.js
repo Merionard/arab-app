@@ -2,10 +2,8 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "./routes/home/home-component";
 import Navigation from "./routes/navigation/navigation-component";
-import ExoContainer from "./exo-arab-component/exo-container/exo-container-component";
 import ba from "./sounds/ba.mp3";
 import alif from "./sounds/alif.mp3";
-import TracuctionOrale from "./exo-arab-component/exo-vocal/traduction-component";
 import ExoEcouteChoixMultiple from "./exo-arab-component/ecoute-choix-multiple/ecoute-choix-multiple-component";
 import ExoEcouteEcriture from "./exo-arab-component/ecoute-ecriture/ecoute-ecriture-component";
 import TraductionOrale from "./exo-arab-component/exo-vocal/traduction-component";
@@ -52,7 +50,7 @@ const App = () => {
           path="exo2"
           element={
             <TraductionOrale
-              exercicesData={[{ id: 1, sound: null, answer: "test" }]}
+              exos={[{ phrase: "Je viens de france", answer: "انا من فرنسا" }]}
             />
           }
         />

@@ -12,7 +12,7 @@ const styles = {
 
 const ExoEcouteChoixMultiple = ({ exo }) => {
   console.log("render");
-  const [exercices, setExercices] = useState(exo);
+  const [exercices] = useState(exo);
   const [currentExercice, setCurrentExercice] = useState(exercices[0]);
   const [finished, setfinished] = useState(false);
   const [defaultStyle, setDefaultStyle] = useState(styles.default);
